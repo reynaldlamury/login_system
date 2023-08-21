@@ -1,14 +1,18 @@
 import express from "express";
 import db from "./config/database.js";
+import router from "./routes/index.js";
 
 const app = express();
 
-// database connection checking ...
+// create database connection 
 try {
-  db.authenticate();
+  await db.authenticate();
   console.log("Database Connected ...");
 } catch (error) {
   console.log(error);
 }
 
-app.listen(500, () => console.log("server is running at port 5000"));
+app.use(express.json());
+app.use(router);
+
+app.listen(5000, () => console.log("server is running at port 5000"));
